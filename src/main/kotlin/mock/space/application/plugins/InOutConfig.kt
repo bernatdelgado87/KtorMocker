@@ -34,11 +34,6 @@ fun Application.configureInOutContent() {
                         call.receiveText()
                     )
                 ).collect {
-                    it.headers.forEach { k, listValue ->
-                        listValue.forEach { v ->
-                           //todo!!!! call.response.headers.append(k, v)
-                        }
-                    }
                     call.respond(it.status, it.body)
                 }
         }

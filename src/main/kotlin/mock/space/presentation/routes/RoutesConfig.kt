@@ -94,7 +94,6 @@ fun Route.configureRoutes() {
             } else {
                 System.out.println("--- Cannot Delete ----")
             }
-            //return all categories
             call.respondRedirect("/")
         }
 
