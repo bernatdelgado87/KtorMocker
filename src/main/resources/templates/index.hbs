@@ -1,0 +1,145 @@
+{{> header}}
+<h1 id="my">👾 SpaceMock 👾 1.0-Alpha</h1>
+
+<table class="table table-striped table-bordered">
+    <thead>
+    <th>id</th>
+    <th>Notas</th>
+    <th>
+        <button class="btn btn-info" onclick='listen(true)'>
+            Escuchar Nuevo
+        </button>
+    </th>
+    </thead>
+
+    {{#indexUiModel.items}}
+        <img src="">
+        <tr>
+            <td>{{folder.name}}</td>
+            <td>
+                    <textarea id="notas{{folder.name}}" class="form-control" rows="10" cols="80">{{notes}}</textarea><br>
+                    <button class='btn btn-info' onclick="saveNote({{folder.name}})">Guardar</button>
+            </td>
+            <td id="editTd{{id}}">
+                <button class='btn btn-danger' onclick='deleteMock("{{folder.absolutePath}}")'>Eliminar Mock</button>
+                <button class='btn btn-success' onclick='listenId("{{folder.name}}")'>Reescribir Mockk desde remoto</button>
+                <button class='btn btn-info' onclick='localMode("{{folder.name}}")'>Modo Local</button>
+            </td>
+        </tr>
+    {{/indexUiModel.items}}
+
+    <script>
+    function deleteMock(file) {
+    var data = {"file": file};
+
+    fetch('/delete', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        location.reload();
+    })
+    .then(json => console.log(json))
+    .catch(error => console.error('Error:', error));
+}
+
+function listenId(id) {
+    fetch(`/listen?id=${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        location.reload();
+    })
+    .then(json => console.log(json))
+    .catch(error => console.error('Error:', error));
+}
+
+function localMode(id){
+fetch(`/localMode?id=${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        location.reload();
+    })
+    .then(json => console.log(json))
+    .catch(error => console.error('Error:', error));
+}
+
+function saveNote(id) {
+  var elementId = "notas" + id;
+  var text = document.getElementById(elementId).value;
+  var data = {"id": id.toString(), "text": text};
+  fetch(`/saveNote`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        location.reload();
+    })
+    .then(json => console.log(json))
+    .catch(error => console.error('Error:', error));
+}
+
+function saveRules() {
+  var elementId = "rules";
+  var text = document.getElementById(elementId).value;
+  var data = {"text": text};
+  fetch(`/saveRules`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        location.reload();
+    })
+    .then(json => console.log(json))
+    .catch(error => console.error('Error:', error));
+}
+
+function listen(activate) {
+        fetch('/listen', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            location.reload();
+        })
+        .then(json => console.log(json))
+        .catch(error => console.error('Error:', error));
+}
+
+
+
+    </script>
+</table>
+<br/>
+<br/>
+<br/>
+<h2>Mock Rules</h2>
+<p>Usa el diferenciador para funcionar en servicios que se alojan en la misma url poniendo el prefijo del campo que los diferencia.</p>
+<form>
+    <textarea id="rules" class="form-control" name="rules">{{indexUiModel.rules}}</textarea><br>
+    <button class='btn btn-warning' onclick="saveRules()">Guardar Rules</button>
+</form>
+
+
+
+{{> footer}}
+
+
