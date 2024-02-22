@@ -2,7 +2,7 @@ val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
 
-project.setProperty("mainClassName", "com.fitnflow.application.ApplicationKt")
+project.setProperty("mainClassName", "mock.space.application.ApplicationKt")
 
 plugins {
     application
@@ -12,10 +12,10 @@ plugins {
 
 }
 
-group = "fitnflow"
+group = "spacemock"
 version = "0.0.1"
 application {
-    mainClass.set("com.fitnflow.application.ApplicationKt")
+    mainClass.set("mock.space.application.ApplicationKt")
 }
 
 repositories {
