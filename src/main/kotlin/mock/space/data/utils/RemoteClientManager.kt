@@ -10,6 +10,7 @@ import io.ktor.util.*
 import java.security.cert.X509Certificate
 import javax.net.ssl.X509TrustManager
 
+@Deprecated("Use RemoteClientManagerOkHttp instead")
 class RemoteClientManager {
 
     companion object {

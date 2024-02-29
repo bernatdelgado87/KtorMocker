@@ -1,12 +1,27 @@
 package mock.space.data.utils
 
 
-fun String.applyRulesIfExists(param: String?, rules: List<String>): String {
-    param?.let {
-        for (differentiator in rules) {
-            val indexOfMethod = param.indexOf(differentiator)
-            if (indexOfMethod > 0) {
-                return this + param.substring(indexOfMethod + differentiator.length, indexOfMethod + 20)
+fun String.applyRulesIfExists(
+    bodyParams: String?,
+    bodyRules: List<String>?,
+    urlParams: String?,
+    urlRules: List<String>?
+): String {
+    bodyParams?.let {
+        if (bodyRules != null) {
+            for (differentiator in bodyRules) {
+                val indexOfMethod = bodyParams.indexOf(differentiator)
+                if (indexOfMethod > 0) {
+                    return this + bodyParams.substring(indexOfMethod + differentiator.length, indexOfMethod + 20)
+                }
+            }
+        }
+    }
+
+    urlParams?.let {
+        if (urlRules != null) {
+            for (differentiator in urlRules) {
+                return this.substringBefore(differentiator)
             }
         }
     }

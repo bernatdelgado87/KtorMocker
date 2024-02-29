@@ -12,7 +12,9 @@ interface MockerRepository {
     suspend fun setListenModel(listenModeModel: ListenModeModel)
     suspend fun getLastMockId(): Int
     suspend fun saveNote(note: String, id: Int)
-    suspend fun saveRules(note: String)
+    suspend fun saveBodyRules(note: String)
+    suspend fun saveUrlRules(note: String)
     suspend fun getNote(id: Int): String
-    suspend fun getRules(): List<String>
+    suspend fun getBodyRules(): List<String>
+    suspend fun getUrlRules(): List<String>
 }

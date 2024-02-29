@@ -8,6 +8,7 @@ import es.experis.app.domain.usecase.UseCase
 import io.ktor.http.*
 import io.ktor.util.*
 import kotlinx.coroutines.flow.Flow
+import mock.space.domain.model.ListenModeModel
 
 class ReadOrWriteMockUseCase (private val repository: MockerRepository = MockerRepositoryImpl.getInstance()
 ) : UseCase<CustomResponse, ReadOrWriteMockUseCase.Input>() {
@@ -16,11 +17,13 @@ class ReadOrWriteMockUseCase (private val repository: MockerRepository = MockerR
     override suspend fun run(params: Input): Flow<CustomResponse> {
         var response: Flow<CustomResponse>
 
-        val currentListenModeModel = repository.getCurrentListenModel()
-        if (currentListenModeModel.isCallToRemoteActivated){
-            response = repository.callToEndpointAndSaveNewResponse(params.urlReceived, params.headersReceived!!.toMap(), params.httpMethod!!, params.body!!, currentListenModeModel.mockId!!)
+        if (repository.getCurrentListenModel().mockId == null){
+            repository.setListenModel(ListenModeModel(true, mockId = repository.getLastMockId() + 1))
+        }
+        if (repository.getCurrentListenModel().isCallToRemoteActivated){
+            response = repository.callToEndpointAndSaveNewResponse(params.urlReceived, params.headersReceived!!.toMap(), params.httpMethod!!, params.body!!, repository.getCurrentListenModel().mockId!!)
         } else {
-            response = repository.getMock(params.urlReceived.applyRulesIfExists(params.body, repository.getRules()), currentListenModeModel.mockId?.let { it }?: repository.getLastMockId())
+            response = repository.getMock(params.urlReceived.applyRulesIfExists(params.body, repository.getBodyRules(), params.urlReceived, repository.getUrlRules()), repository.getCurrentListenModel().mockId?.let { it }?: repository.getLastMockId())
         }
         return response
     }

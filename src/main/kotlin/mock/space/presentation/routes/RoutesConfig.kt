@@ -59,12 +59,14 @@ fun Route.configureRoutes() {
         post("/saveRules"){
             val data = call.receive<Map<String, String>>()
             val text = data["text"]
+            val type = data["type"]
             System.out.println("Received rules:" + text)
 
             val usecase = SaveRulesUseCase()
             usecase(
                 SaveRulesUseCase.Input(
-                    text!!
+                    text!!,
+                    type!!
                 )
             ).collect {
                 call.respond(HttpStatusCode.OK)

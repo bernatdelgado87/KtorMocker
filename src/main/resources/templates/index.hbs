@@ -95,7 +95,31 @@ function saveNote(id) {
 function saveRules() {
   var elementId = "rules";
   var text = document.getElementById(elementId).value;
-  var data = {"text": text};
+  var data = {
+    "text": text,
+    "type": "body"
+  };
+  fetch(`/saveRules`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        location.reload();
+    })
+    .then(json => console.log(json))
+    .catch(error => console.error('Error:', error));
+}
+
+function saveRulesUrl() {
+  var elementId = "rulesUrl";
+  var text = document.getElementById(elementId).value;
+  var data = {
+    "text": text,
+    "type": "url"
+  };
   fetch(`/saveRules`, {
         method: 'POST',
         headers: {
@@ -131,11 +155,18 @@ function listen(activate) {
 <br/>
 <br/>
 <br/>
-<h2>Mock Rules</h2>
-<p>Usa el diferenciador para funcionar en servicios que se alojan en la misma url poniendo el prefijo del campo que los diferencia.</p>
+<h2>Mock Body Rules</h2>
+<p>Usa el diferenciador para funcionar en servicios que se alojan en la misma url y tienen elemento diferenciador en el body, poniendo el prefijo del campo que los diferencia.</p>
 <form>
-    <textarea id="rules" class="form-control" name="rules">{{indexUiModel.rules}}</textarea><br>
+    <textarea id="rules" class="form-control" name="rules">{{indexUiModel.rules.body}}</textarea><br>
     <button class='btn btn-warning' onclick="saveRules()">Guardar Rules</button>
+</form>
+
+<h2>Mock URL Rules</h2>
+<p>Usa el diferenciador de URLS para añadir como iguales las urls que contienen estos caracteres dentro de URL params.</p>
+<form>
+    <textarea id="rulesUrl" class="form-control" name="rules">{{indexUiModel.rules.url}}</textarea><br>
+    <button class='btn btn-warning' onclick="saveRulesUrl()">Guardar Rules</button>
 </form>
 
 

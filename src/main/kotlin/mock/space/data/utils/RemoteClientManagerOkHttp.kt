@@ -4,9 +4,11 @@ import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.client.features.*
 import io.ktor.client.features.logging.*
+import io.ktor.client.features.websocket.*
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.WebSocket
 import java.security.cert.X509Certificate
 import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
@@ -46,6 +48,10 @@ class RemoteClientManagerOkHttp {
 
         install(HttpTimeout) {
             requestTimeoutMillis = 60000
+        }
+
+        install(WebSockets){
+
         }
 
         expectSuccess = false

@@ -48,12 +48,12 @@ class MockerRepositoryImpl private constructor() : MockerRepository {
 
         var path: String = urlReceived.cleanPath()
         localDataSource.saveResponse(
-            Constants.PREFIX_FOLDER + mockId + path.applyRulesIfExists(body, localDataSource.getBodyRules()),
+            Constants.PREFIX_FOLDER + mockId + path.applyRulesIfExists(body, localDataSource.getBodyRules(), urlReceived, localDataSource.getUrlRules()),
             remoteBody,
             remoteHeaders,
             remoteStatus
         )
-        return flowOf(localDataSource.readResponse(Constants.PREFIX_FOLDER + (mockId.toString()) + path.applyRulesIfExists(body, localDataSource.getBodyRules())))
+        return flowOf(localDataSource.readResponse(Constants.PREFIX_FOLDER + (mockId.toString()) + path.applyRulesIfExists(body, localDataSource.getBodyRules(), urlReceived, localDataSource.getUrlRules())))
     }
 
     override suspend fun getMock(urlReceived: String, mockId: Int): Flow<CustomResponse> {
@@ -76,16 +76,24 @@ class MockerRepositoryImpl private constructor() : MockerRepository {
         return localDataSource.saveNote(note, id)
     }
 
-    override suspend fun saveRules(note: String) {
-        return localDataSource.saveRules(note)
+    override suspend fun saveBodyRules(note: String) {
+        return localDataSource.saveBodyRules(note)
+    }
+
+    override suspend fun saveUrlRules(note: String) {
+        return localDataSource.saveUrlRules(note)
     }
 
     override suspend fun getNote(id: Int): String {
         return localDataSource.getNote(id)
     }
 
-    override suspend fun getRules(): List<String> {
+    override suspend fun getBodyRules(): List<String> {
         return localDataSource.getBodyRules()
+    }
+
+    override suspend fun getUrlRules(): List<String> {
+        return localDataSource.getUrlRules()
     }
 
 }

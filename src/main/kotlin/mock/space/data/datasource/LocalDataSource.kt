@@ -3,11 +3,12 @@ package mock.space.data.datasource
 import mock.space.data.utils.Constants
 import mock.space.data.utils.Constants.Companion.NOTES_FOLDER_SUFIX
 import mock.space.data.utils.Constants.Companion.PREFIX_FOLDER
-import mock.space.data.utils.Constants.Companion.RULES_FOLDER_SUFIX
+import mock.space.data.utils.Constants.Companion.RULES_URL_FOLDER_SUFIX
 import mock.space.data.model.ResponseType
 import mock.space.domain.model.CustomResponse
 import mock.space.domain.model.ListenModeModel
 import io.ktor.http.*
+import mock.space.data.utils.Constants.Companion.RULES_BODY_FOLDER_SUFIX
 import java.io.File
 import java.io.FileWriter
 
@@ -20,12 +21,23 @@ class LocalDataSource {
     }
 
 
-    private fun getRulesFile(): File{
-        return File(PREFIX_FOLDER+RULES_FOLDER_SUFIX)
+    private fun getBodyRulesFile(): File{
+        return File(PREFIX_FOLDER+RULES_BODY_FOLDER_SUFIX)
     }
 
-    fun saveRules(text: String){
-        val file = getRulesFile()
+    private fun getUrlRulesFile(): File{
+        return File(PREFIX_FOLDER+RULES_URL_FOLDER_SUFIX)
+    }
+
+    fun saveBodyRules(text: String){
+        val file = getBodyRulesFile()
+        val writer = FileWriter(file)
+        writer.write(text)
+        writer.close()
+    }
+
+    fun saveUrlRules(text: String){
+        val file = getUrlRulesFile()
         val writer = FileWriter(file)
         writer.write(text)
         writer.close()
@@ -34,7 +46,20 @@ class LocalDataSource {
     fun getBodyRules(): List<String>{
         val lines = mutableListOf<String>()
         try {
-            getRulesFile().readText().lines().forEach { line ->
+            getBodyRulesFile().readText().lines().forEach { line ->
+                lines.add(line)
+            }
+            return lines
+        } catch (e:Exception){
+            System.out.println(e.printStackTrace())
+            return lines
+        }
+    }
+
+    fun getUrlRules(): List<String>{
+        val lines = mutableListOf<String>()
+        try {
+            getUrlRulesFile().readText().lines().forEach { line ->
                 lines.add(line)
             }
             return lines

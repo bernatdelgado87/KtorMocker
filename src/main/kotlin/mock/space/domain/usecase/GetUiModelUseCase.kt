@@ -8,6 +8,7 @@ import es.experis.app.domain.usecase.None
 import es.experis.app.domain.usecase.UseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import mock.space.presentation.model.Rules
 import java.io.File
 
 class GetUiModelUseCase (private val repository: MockerRepository = MockerRepositoryImpl.getInstance()) : UseCase<IndexUiModel, None>() {
@@ -21,14 +22,22 @@ class GetUiModelUseCase (private val repository: MockerRepository = MockerReposi
             .forEach {
                 items.add(MockItemUiModel(it, repository.getNote(it.name.toInt())))
             }
-        var rules = ""
-        repository.getRules().forEachIndexed{index, rule ->
+        var rulesBody = ""
+        repository.getBodyRules().forEachIndexed{ index, rule ->
             if (index > 0){
                 "\n"
             }
-            rules += rule
+            rulesBody += rule
         }
 
-        return flowOf(IndexUiModel(items, currentListenModeModel, rules))
+        var rulesUrl = ""
+        repository.getUrlRules().forEachIndexed{ index, rule ->
+            if (index > 0){
+                "\n"
+            }
+            rulesUrl += rule
+        }
+
+        return flowOf(IndexUiModel(items, currentListenModeModel, Rules(rulesBody, rulesUrl)))
     }
 }
