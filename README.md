@@ -14,6 +14,9 @@ Frontend: `http://localhost:5000/`
 The project is currently set up to work locally because if it were to work remotely, all clients would listen to the same mock (the last one selected).
 For now, it's only enabled to make SSL requests. If you want to mock the response of 'https://example.com/register', you should use the endpoint 'http://YourLocalIp:5000/example.com/register'.
 
+![1](https://github.com/bernatdelgado87/KtorMocker/assets/52576076/256ed6d6-2350-471e-a0a0-dbb302a60fa9)
+
+
 Essentially, it has two operating modes:
 Local Mode and Remote Mode, which are explained below.
 
