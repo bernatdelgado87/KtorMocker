@@ -20,10 +20,6 @@ fun Application.configureInOutContent() {
     install(StatusPages) {
         status(HttpStatusCode.NotFound) { status ->
                 System.out.println("<-- Url Received")
-                if (call.request.uri.contains("key")){
-                    System.out.println("<-- sankey")
-
-                }
                 System.out.println(call.request.uri)
                 val usecase = ReadOrWriteMockUseCase()
                 usecase(
