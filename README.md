@@ -1,6 +1,6 @@
 # Space Mock
 
-This is a server that acts as an intermediary between the backend and client devices, automatically storing the responses returned by the remote server in local files. It is capable of functioning as a mock server, returning the responses it has previously collected.
+This is a server that acts as an intermediary between the backend and client devices, automatically storing the responses returned by the remote server in local files. It can operate as a mock server, returning the responses it has previously collected.
 
 The server has a web-based administration frontend where the behavior mode can be selected, as detailed below.
 
