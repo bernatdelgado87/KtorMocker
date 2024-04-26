@@ -131,10 +131,10 @@ class LocalDataSource {
     }
 
     fun saveResponse(path: String, body: String?, headers: Headers, status: HttpStatusCode) {
-        println("La ruta es " + path)
+        println("Path is " + path)
 
         if (!path.contains("/")) {
-            println("La ruta debe contener al menos una barra diagonal.")
+            println("Path should contains a slash.")
             return
         }
         println("Path " + path)
