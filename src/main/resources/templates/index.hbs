@@ -4,10 +4,10 @@
 <table class="table table-striped table-bordered">
     <thead>
     <th>id</th>
-    <th>Notas</th>
+    <th>Note</th>
     <th>
         <button class="btn btn-info" onclick='listen(true)'>
-            Escuchar Nuevo
+            Listen New
         </button>
     </th>
     </thead>
@@ -21,9 +21,9 @@
                     <button class='btn btn-info' onclick="saveNote({{folder.name}})">Guardar</button>
             </td>
             <td id="editTd{{id}}">
-                <button class='btn btn-danger' onclick='deleteMock("{{folder.absolutePath}}")'>Eliminar Mock</button>
-                <button class='btn btn-success' onclick='listenId("{{folder.name}}")'>Reescribir Mockk desde remoto</button>
-                <button class='btn btn-info' onclick='localMode("{{folder.name}}")'>Modo Local</button>
+                <button class='btn btn-danger' onclick='deleteMock("{{folder.absolutePath}}")'>Delete Mock</button>
+                <button class='btn btn-success' onclick='listenId("{{folder.name}}")'>Rewrite Mockk from remote</button>
+                <button class='btn btn-info' onclick='localMode("{{folder.name}}")'>Local Mode</button>
             </td>
         </tr>
     {{/indexUiModel.items}}
@@ -156,17 +156,17 @@ function listen(activate) {
 <br/>
 <br/>
 <h2>Mock Body Rules</h2>
-<p>Usa el diferenciador para funcionar en servicios que se alojan en la misma url y tienen elemento diferenciador en el body, poniendo el prefijo del campo que los diferencia.</p>
+<p>Use the differentiator to work on services that are hosted at the same url and have a differentiating element in the body, prefixing the field that differentiates them.</p>
 <form>
     <textarea id="rules" class="form-control" name="rules">{{indexUiModel.rules.body}}</textarea><br>
     <button class='btn btn-warning' onclick="saveRules()">Guardar Rules</button>
 </form>
 
 <h2>Mock URL Rules</h2>
-<p>Usa el diferenciador de URLS para añadir como iguales las urls que contienen estos caracteres dentro de URL params.</p>
+<p>Use the URL differentiator to add urls containing these characters as equals within URL params.</p>
 <form>
     <textarea id="rulesUrl" class="form-control" name="rules">{{indexUiModel.rules.url}}</textarea><br>
-    <button class='btn btn-warning' onclick="saveRulesUrl()">Guardar Rules</button>
+    <button class='btn btn-warning' onclick="saveRulesUrl()">Save Rules</button>
 </form>
 
 
