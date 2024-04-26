@@ -19,10 +19,8 @@ fun String.applyRulesIfExists(
     }
 
     urlParams?.let {
-        if (urlRules != null) {
-            for (differentiator in urlRules) {
-                return this.substringBefore(differentiator)
-            }
+        urlRules?.filter { rule -> urlParams.contains(rule) }?.firstOrNull()?.apply {
+            return this@applyRulesIfExists.substringBefore(it)
         }
     }
     return this

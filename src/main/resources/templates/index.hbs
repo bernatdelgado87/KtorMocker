@@ -18,7 +18,7 @@
             <td>{{folder.name}}</td>
             <td>
                     <textarea id="notas{{folder.name}}" class="form-control" rows="10" cols="80">{{notes}}</textarea><br>
-                    <button class='btn btn-info' onclick="saveNote({{folder.name}})">Guardar</button>
+                    <button class='btn btn-info' onclick="saveNote({{folder.name}})">Save</button>
             </td>
             <td id="editTd{{id}}">
                 <button class='btn btn-danger' onclick='deleteMock("{{folder.absolutePath}}")'>Delete Mock</button>

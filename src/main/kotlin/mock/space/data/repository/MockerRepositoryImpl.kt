@@ -48,12 +48,14 @@ class MockerRepositoryImpl private constructor() : MockerRepository {
 
         var path: String = urlReceived.cleanPath()
         localDataSource.saveResponse(
-            Constants.PREFIX_FOLDER + mockId + path.applyRulesIfExists(body, localDataSource.getBodyRules(), urlReceived, localDataSource.getUrlRules()),
-            remoteBody,
-            remoteHeaders,
-            remoteStatus
+            path = Constants.PREFIX_FOLDER + mockId.toString() + path.applyRulesIfExists(body, localDataSource.getBodyRules(), urlReceived, localDataSource.getUrlRules()),
+            body = remoteBody,
+            headers = remoteHeaders,
+            status = remoteStatus
         )
-        return flowOf(localDataSource.readResponse(Constants.PREFIX_FOLDER + (mockId.toString()) + path.applyRulesIfExists(body, localDataSource.getBodyRules(), urlReceived, localDataSource.getUrlRules())))
+        return flowOf(localDataSource.readResponse(
+            path = Constants.PREFIX_FOLDER + mockId.toString() + path.applyRulesIfExists(body, localDataSource.getBodyRules(), urlReceived, localDataSource.getUrlRules()))
+        )
     }
 
     override suspend fun getMock(urlReceived: String, mockId: Int): Flow<CustomResponse> {
