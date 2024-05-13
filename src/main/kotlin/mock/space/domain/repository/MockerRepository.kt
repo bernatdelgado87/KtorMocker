@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 interface MockerRepository {
     suspend fun callToEndpointAndSaveNewResponse(urlReceived: String, headersReceived: Map<String, List<String>>, httpMethod: HttpMethod, body: String, mockId: Int): Flow<CustomResponse>
     suspend fun getMock(urlReceived: String, mockId: Int): Flow<CustomResponse>
-    suspend fun getCurrentListenModel(): ListenModeModel
-    suspend fun setListenModel(listenModeModel: ListenModeModel)
+    suspend fun getCurrentListenModel(ip: String): ListenModeModel
+    suspend fun setListenModel(ip: String, listenModeModel: ListenModeModel)
     suspend fun getLastMockId(): Int
     suspend fun saveNote(note: String, id: Int)
     suspend fun saveBodyRules(note: String)

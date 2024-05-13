@@ -62,12 +62,17 @@ class MockerRepositoryImpl private constructor() : MockerRepository {
         return flowOf(localDataSource.readResponse(Constants.PREFIX_FOLDER + mockId + urlReceived.cleanPath()))
     }
 
-    override suspend fun getCurrentListenModel(): ListenModeModel {
-        return localDataSource.listenModeModel
+    override suspend fun getCurrentListenModel(ip: String): ListenModeModel {
+        localDataSource.listenModeModel.apply {
+            get(ip)?.let {
+                return get(ip)!!
+            }?: put(ip, ListenModeModel())
+            return get(ip)!!
+        }
     }
 
-    override suspend fun setListenModel(listenModeModel: ListenModeModel) {
-        localDataSource.listenModeModel = listenModeModel
+    override suspend fun setListenModel(ip: String, listenModeModel: ListenModeModel) {
+        localDataSource.listenModeModel.put(ip, listenModeModel)
     }
 
     override suspend fun getLastMockId(): Int {

@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.flowOf
 import mock.space.presentation.model.Rules
 import java.io.File
 
-class GetUiModelUseCase (private val repository: MockerRepository = MockerRepositoryImpl.getInstance()) : UseCase<IndexUiModel, None>() {
+class GetUiModelUseCase (private val repository: MockerRepository = MockerRepositoryImpl.getInstance()) : UseCase<IndexUiModel, String>() {
 
-    override suspend fun run(params: None): Flow<IndexUiModel> {
-        val currentListenModeModel = repository.getCurrentListenModel()
+    override suspend fun run(params: String): Flow<IndexUiModel> {
+        val currentListenModeModel = repository.getCurrentListenModel(params)
         val items = mutableListOf<MockItemUiModel>()
         val rootFile = File("demo/")
         rootFile.listFiles()

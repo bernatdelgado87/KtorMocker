@@ -5,6 +5,7 @@ import mock.space.domain.usecase.SaveNoteUseCase
 import mock.space.domain.usecase.SaveRulesUseCase
 import mock.space.domain.usecase.SetListenModeUseCase
 import io.ktor.application.*
+import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.mustache.*
 import io.ktor.request.*
@@ -22,7 +23,8 @@ fun Route.configureRoutes() {
     route("/") {
         get("/") {
             val usecase = GetUiModelUseCase()
-            usecase().collect {
+            val ip =  call.request.origin.host
+            usecase(ip).collect {
                 call.respond(MustacheContent("index.hbs", mapOf("indexUiModel" to it)))
             }
         }
@@ -31,8 +33,10 @@ fun Route.configureRoutes() {
             val id = params["id"]
 
             val usecase = SetListenModeUseCase()
+            val ip =  call.request.origin.host
             usecase(
                 SetListenModeUseCase.Input(
+                    ip,
                     true,
                     id?.toInt()
                 )
@@ -76,9 +80,11 @@ fun Route.configureRoutes() {
         get("/localMode") {
             val params = call.parameters
             val id = params["id"]
+            val ip =  call.request.origin.host
             val usecase = SetListenModeUseCase()
             usecase(
                 SetListenModeUseCase.Input(
+                    ip,
                     false,
                     id!!.toInt()
                 )

@@ -9,6 +9,8 @@ plugins {
     kotlin("jvm") version "1.5.31"
     kotlin("plugin.serialization") version "1.5.0"
     id("com.github.johnrengelman.shadow") version "6.1.0"
+    //for deploy use command gradlew shadowJar
+    // Export will be at projectFolder/build/libs
 }
 
 group = "spacemock"

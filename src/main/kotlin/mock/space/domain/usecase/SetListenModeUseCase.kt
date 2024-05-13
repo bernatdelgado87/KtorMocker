@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flowOf
 
 class SetListenModeUseCase (private val repository: MockerRepository = MockerRepositoryImpl.getInstance()
 ) : UseCase<Unit, SetListenModeUseCase.Input>() {
-    data class Input(val listenFromRemote: Boolean, val mockkId: Int? = null)
+    data class Input(val ip: String, val listenFromRemote: Boolean, val mockkId: Int? = null)
 
     override suspend fun run(params: Input): Flow<Unit> {
         var listenModeModel: ListenModeModel
@@ -18,7 +18,7 @@ class SetListenModeUseCase (private val repository: MockerRepository = MockerRep
         } else {
             listenModeModel = ListenModeModel(params.listenFromRemote, params.mockkId?.let { it }?: repository.getLastMockId() )
         }
-        repository.setListenModel(listenModeModel)
+        repository.setListenModel(params.ip, listenModeModel)
         return flowOf(Unit)
     }
 }

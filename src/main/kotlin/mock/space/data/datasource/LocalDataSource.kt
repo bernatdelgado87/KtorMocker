@@ -14,7 +14,7 @@ import java.io.FileWriter
 
 class LocalDataSource {
 
-    var listenModeModel = ListenModeModel()
+    var listenModeModel: MutableMap<String, ListenModeModel> = mutableMapOf()
 
     private fun getNotesFile(id: Int): File{
         return File(PREFIX_FOLDER+id.toString()+NOTES_FOLDER_SUFIX)

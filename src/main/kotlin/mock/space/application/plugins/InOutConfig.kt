@@ -20,10 +20,13 @@ fun Application.configureInOutContent() {
     install(StatusPages) {
         status(HttpStatusCode.NotFound) { status ->
                 System.out.println("<-- Url Received")
-                System.out.println(call.request.uri)
+            System.out.println(call.request.uri)
+            System.out.println("From IP -> " + call.request.origin.host)
+            
                 val usecase = ReadOrWriteMockUseCase()
                 usecase(
                     ReadOrWriteMockUseCase.Input(
+                        call.request.origin.host,
                         call.request.uri,
                         call.request.headers,
                         call.request.httpMethod,
