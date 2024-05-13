@@ -4,7 +4,7 @@ package mock.space.data.utils
 fun String.applyRulesIfExists(
     bodyParams: String?,
     bodyRules: List<String>?,
-    urlParams: String?,
+    url: String,
     urlRules: List<String>?
 ): String {
     bodyParams?.let {
@@ -18,12 +18,13 @@ fun String.applyRulesIfExists(
         }
     }
 
-    urlParams?.let {
-        urlRules?.filter { rule -> urlParams.contains(rule) }?.firstOrNull()?.apply {
-            return this@applyRulesIfExists.substringBefore(it)
+    urlRules?.forEach { rule ->
+        if (url.contains(rule)) {
+            return url.substringBefore(rule)
         }
     }
     return this
+
 }
 
 fun String.cleanPath(): String =
